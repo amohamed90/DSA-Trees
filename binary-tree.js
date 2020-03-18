@@ -95,7 +95,26 @@ class BinaryTree {
    * which is larger than lowerBound. Return null if no such value exists. */
 
   nextLarger(lowerBound) {
+    //if the root is empty then return null since no higher value exists
+    if(!this.root) return null;
 
+    //
+    let queue = [this.root];
+    let closest = null;
+
+    while(queue.length){
+      let currentNode = queue.shift();
+      let currentVal = currentNode.val;
+      let higherThanLowerBound = currentVal > lowerBound;
+      let shouldReassignClossest = currentVal < closest || closest === null;
+
+      if(higherThanLowerBound && shouldReassignClossest){
+        closest = currentVal;
+      }
+        if(currentNode.left) queue.push(currentNode.left);
+        if(currentNode.right) queue.push(currentNode.right);
+    }
+    return closest;
   }
 
   /** Further study!
